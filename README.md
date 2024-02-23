@@ -1,27 +1,101 @@
-# OktaAngularStandaloneRuntimeConfigExample
+# Angular Standalone Runtime Configuration Example
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
+This repository contains a working example of adding Okta Angular SDK to a standalone Angular project and how to load the Okta authentication configuration at runtime. Please read [Flexible Authentication Configurations in Angular Applications Using Okta][blog] for a detailed guide through.
 
-## Development server
+**Prerequisites**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Node 18 or greater
+* Okta CLI
+* Angular CLI
+* Your favorite IDE
+* A web browser with good debugging capabilities
+* Terminal window
 
-## Code scaffolding
+> [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* [Getting Started](#getting-started)
+* [Links](#links)
+* [Help](#help)
+* [License](#license)
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To run this example, run the following commands:
 
-## Running unit tests
+```bash
+git clone https://github.com/oktadev/okta-angular-standalone-runtime-config-example.git
+cd okta-angular-standalone-runtime-config-example
+npm ci
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Create an OIDC Application in Okta
 
-## Running end-to-end tests
+Create a free developer account with the following command using the [Okta CLI](https://cli.okta.com):
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```shell
+okta register
+```
 
-## Further help
+If you already have a developer account, use `okta login` to integrate it with the Okta CLI.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Provide the required information. Once you register, create a client application in Okta with the following command:
+
+```shell
+okta apps create
+```
+
+You will be prompted to select the following options:
+- Type of Application: **2: SPA**
+- Redirect URI: `http://localhost:4200/login/callback`
+- Logout Redirect URI: `http://localhost:4200`
+
+The application configuration will be printed to your screen:
+
+```shell
+Okta application configuration:
+Issuer:    https://<OKTA_DOMAIN>.okta.com/oauth2/default
+Client ID: <CLIENT_ID>
+```
+
+Update `src/api/config.json` with your Okta settings.
+
+```json
+{
+    "issuer": "https://{yourOktaDomain}/oauth2/default",
+    "clientId": "{yourClientId}"
+}
+```
+
+Start the app by running
+
+```shell
+npm start
+```
+
+## Run Tests
+
+Projects are incomplete without unit tests. Run the unit tests in this project by using the following command line operation
+
+```shell
+npm run test
+```
+
+Open up `*.spec.ts` files to see examples of how to mock Okta libraries for isolated unit testing.
+
+## Links
+
+This example uses the following open source libraries from Okta:
+
+* [Okta Auth JavaScript SDK](https://github.com/okta/okta-auth-js)
+* [Okta Angular SDK](https://github.com/okta/okta-angular)
+* [Okta CLI](https://github.com/okta/okta-cli)
+
+## Help
+
+Please post any questions as comments on the [blog post][blog], or visit our [Okta Developer Forums](https://devforum.okta.com/).
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).
+
+[blog]: https://developer.okta.com/blog/2024/02/28/okta-authentication-angular
