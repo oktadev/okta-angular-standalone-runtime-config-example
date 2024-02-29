@@ -13,7 +13,13 @@ function configInitializer(httpBackend: HttpBackend, configService: OktaAuthConf
   new HttpClient(httpBackend)
   .get('api/config.json')
   .pipe(
-    tap((authConfig: any) => configService.setConfig({oktaAuth: new OktaAuth({...authConfig, redirectUri: `${window.location.origin}/login/callback`})})),
+    tap((authConfig: any) => configService.setConfig({
+      oktaAuth: new OktaAuth({
+        ...authConfig,
+        redirectUri: `${window.location.origin}/login/callback`,
+        scopes: ['openid', 'offline_access', 'profile']
+      })
+    })),
     take(1)
   );
 }
